@@ -4,6 +4,12 @@
 import random
 
 def is_composite(n, a, d, s):
+	"""
+	Try to determinate if the number n is composite.
+	n : the number tested
+	a : a random number < n-1
+	d, s : numbers verifying 2**s * d == n-1
+	"""
 	if(pow(a, d, n) == 1):
 		return False
 
@@ -14,6 +20,12 @@ def is_composite(n, a, d, s):
 	return True
 
 def miller_rabin(n, k=10):
+	"""
+	Implementation of the Miller-Rabin which try to evaluate if a number
+	is prime.
+	n : the number tested
+	k : number of iteration (increase the probability of finding a true prime number)
+	"""
 	d = n-1
 	s = 0
 
@@ -32,6 +44,11 @@ def miller_rabin(n, k=10):
 	return True
 
 def is_prime(n):
+	"""
+	Return true if the given number n is prime, false otherwise.
+	The algorithm has a small chance of evaluate prime a number which is not, 
+	because it uses the Miller-Rabin algorithm.
+	"""
 	if(n <= 2):
 		return False
 	if(n % 2 == 0):
@@ -39,15 +56,19 @@ def is_prime(n):
 
 	return miller_rabin(n)
 
-def generate_prime_number(digit_number=500):
+def generate_prime_number(bit_number=1000):
+	"""
+	Return a prime number of bit_number bits.
+	"""
 	i = 1
 	while True:
-		a = random.randint(10**digit_number, 10**(digit_number+1)-1)
+		a = random.getrandbits(bit_number)
 		if(is_prime(a)):
-			print(str(i) + ' itérations')
+			print(str(i) + ' iterations')
+			print('Number found : ' + str(a))
 			return a
 		i += 1
 
 
 if __name__ == '__main__':
-	print(generate_prime_number())
+	generate_prime_number()
